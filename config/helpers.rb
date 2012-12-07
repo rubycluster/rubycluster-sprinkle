@@ -55,7 +55,7 @@ end
 
 def init_deployment(recipe_name = nil)
 
-  recipe_name ||= (ENV['DEPLOY_TO'] || 'deploy')
+  recipe_name ||= (ENV['DEPLOY_RECIPE'] || 'deploy')
   recipe_path = ['recipes', recipe_name].join('/')
 
   deployment do
@@ -112,4 +112,15 @@ def requires_each(packages = [])
     requires package
   end
 
+end
+
+def push_password_to_cmd(password, command)
+  cmd = [ "echo '#{password}'", " | ", command ].join
+end
+
+def ssh_port_should_be_changed?
+  initial_port = Package.fetch(:initial_port)
+  target_port = Package.fetch(:target_port)
+  target_port.present? && (initial_port.present? && target_port != initial_port || target_port != 22)
+  # false
 end

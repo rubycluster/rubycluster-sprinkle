@@ -6,14 +6,17 @@ policy :base_sudo, roles: :master do
   requires_each(%w[
     environment
     git
-    rvm_dependencies
+    rvm
     mysql
     zsh
     vim
     tmux
     tmuxinator
+    no_apache
     #nginx
     #passenger
+    imagemagick
+    cleanup
   ])
 
 end

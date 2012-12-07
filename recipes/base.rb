@@ -1,6 +1,12 @@
-set :hostingserver, CONFIG[:vagrant][:server]
-set :port, CONFIG[:vagrant][:port]
-set :user, CONFIG[:vagrant][:user]
+set :hostingserver, config(:server)
+set :port, config(:target, :port)
+set :port, config(:initial, :port) if fetch(:port).blank?
+set :user, config(:target, :user)
+
+set :target_port, config(:target, :port)
+set :target_user, config(:target, :user)
+set :target_password, config(:target, :password)
+set :target_group, config(:target, :group)
 
 set :runner, fetch(:user)
 

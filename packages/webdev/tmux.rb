@@ -13,7 +13,7 @@ end
 package :tmuxinator do
 
   gem 'tmuxinator'
-  push_text '[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator', '~/.profile'
+  push_text '[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator', '~/.bashrc'
 
   verify do
     has_gem 'tmuxinator'

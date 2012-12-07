@@ -1,11 +1,19 @@
 package :rvm do
 
-  runner '\curl -L https://get.rvm.io | bash -s stable'
-  push_text '[[ -s ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm', '~/.profile'
+  deploy_user = Package.fetch(:target_user)
+
+  noop do
+    post :install, '\curl -L https://get.rvm.io | sudo bash -s stable'
+    # post :install, 'source /etc/profile.d/rvm.sh'
+    post :install, "adduser #{deploy_user} rvm"
+  end
+  # push_text '[[ -s ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm', '~/.bashrc'
+
+  requires :rvm_dependencies
 
   verify do
-    has_directory '~/.rvm'
-    # has_executable 'rvm'
+    has_directory '/usr/local/rvm'
+    has_file '/usr/local/rvm/bin/rvm'
   end
 
 end

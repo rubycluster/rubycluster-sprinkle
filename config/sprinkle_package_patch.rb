@@ -1,8 +1,8 @@
 # Monkey patch...
 
-module Sprinkle::Package
+module Sprinkle
 
-  class Package
+  class Settings
 
     @@capistrano = {}
 

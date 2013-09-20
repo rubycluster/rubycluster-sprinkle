@@ -42,7 +42,7 @@ end
 
 package :change_ssh_port do
 
-  deploy_port = Package.fetch(:target_port)
+  deploy_port = Sprinkle::Settings.fetch(:target_port)
   file_path = '/etc/ssh/sshd_config'
 
   replace_text "Port 22", "Port #{deploy_port}", file_path, sudo: true
@@ -55,16 +55,14 @@ end
 
 package :prepare_user_ssh_files do
 
-  deploy_user = Package.fetch(:target_user)
+  deploy_user = Sprinkle::Settings.fetch(:target_user)
 
-  noop do
-    post :install, "mkdir -p /home/#{deploy_user}/.ssh"
-    post :install, "touch /home/#{deploy_user}/.ssh/id_rsa"
-    post :install, "touch /home/#{deploy_user}/.ssh/id_rsa.pub"
-    post :install, "touch /home/#{deploy_user}/.ssh/authorized_keys"
-    post :install, "chown -R #{deploy_user}:#{deploy_user} /home/#{deploy_user}/.ssh/"
-    post :install, "chmod 0600 /home/#{deploy_user}/.ssh/id_rsa"
-  end
+  runner "mkdir -p /home/#{deploy_user}/.ssh"
+  # runner "touch /home/#{deploy_user}/.ssh/id_rsa"
+  # runner "touch /home/#{deploy_user}/.ssh/id_rsa.pub"
+  runner "touch /home/#{deploy_user}/.ssh/authorized_keys"
+  runner "chown -R #{deploy_user}:#{deploy_user} /home/#{deploy_user}/.ssh/"
+  runner "chmod 0600 /home/#{deploy_user}/.ssh/id_rsa"
 
   verify do
     has_file "/home/#{deploy_user}/.ssh/id_rsa.pub"
@@ -75,7 +73,7 @@ end
 
 package :copy_public_key do
 
-  deploy_user = Package.fetch(:target_user)
+  deploy_user = Sprinkle::Settings.fetch(:target_user)
   local_public_key_path = File.join(ENV["HOME"], ".ssh", "id_rsa.pub")
 
   if File.exists?(local_public_key_path)
@@ -83,7 +81,7 @@ package :copy_public_key do
     config_file = "/home/#{deploy_user}/.ssh/authorized_keys"
     config_text = File.open(local_public_key_path).read.lstrip
 
-    push_text config_text, config_file, :sudo => false
+    push_text config_text, config_file, :sudo => true
 
     verify do
       has_file config_file

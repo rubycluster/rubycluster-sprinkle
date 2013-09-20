@@ -1,8 +1,6 @@
 package :tmux do
 
-  apt %w(libevent-dev libncurses5-dev)
-  version '1.7'
-  source "http://downloads.sourceforge.net/tmux/tmux-#{version}.tar.gz"
+  apt %w(tmux)
 
   verify do
     has_executable 'tmux'
@@ -13,10 +11,12 @@ end
 package :tmuxinator do
 
   gem 'tmuxinator'
-  push_text '[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator', '~/.bashrc'
+  push_text 'source ~/.bin/tmuxinator.bash', '~/.bashrc'
 
   verify do
     has_gem 'tmuxinator'
   end
+
+  requires :tmux
 
 end

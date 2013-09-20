@@ -75,7 +75,7 @@ def init_deployment(recipe_name = nil)
 end
 
 def forward_variables
-  Sprinkle::Package::Package.set_variables = self.variables
+  Sprinkle::Settings.set_variables = self.variables
 end
 
 def transfer_text(local_file, remote_file, options = {})
@@ -115,12 +115,12 @@ def requires_each(packages = [])
 end
 
 def push_password_to_cmd(password, command)
-  cmd = [ "echo '#{password}'", " | ", command ].join
+  cmd = [ "echo -e '#{password}'", " | ", command ].join
 end
 
 def ssh_port_should_be_changed?
-  initial_port = Package.fetch(:initial_port)
-  target_port = Package.fetch(:target_port)
+  initial_port = Sprinkle::Settings.fetch(:initial_port)
+  target_port = Sprinkle::Settings.fetch(:target_port)
   target_port.present? && (initial_port.present? && target_port != initial_port || target_port != 22)
   # false
 end

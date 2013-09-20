@@ -11,8 +11,7 @@ policy :base_sudo, roles: :master do
     zsh
     vim
     tmux
-    tmuxinator
-    no_apache
+    #no_apache
     #nginx
     #passenger
     imagemagick

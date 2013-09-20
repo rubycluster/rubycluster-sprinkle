@@ -1,4 +1,4 @@
 package :no_apache do
-  run "/etc/init.d/apache2 stop"
-  run "apt-get remove apache2*"
+  runner "/etc/init.d/apache2 stop"
+  runner "apt-get remove apache2*"
 end

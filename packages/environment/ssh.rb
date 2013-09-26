@@ -62,10 +62,10 @@ package :prepare_user_ssh_files do
   # runner "touch /home/#{deploy_user}/.ssh/id_rsa.pub"
   runner "touch /home/#{deploy_user}/.ssh/authorized_keys"
   runner "chown -R #{deploy_user}:#{deploy_user} /home/#{deploy_user}/.ssh/"
-  runner "chmod 0600 /home/#{deploy_user}/.ssh/id_rsa"
+  # runner "chmod 0600 /home/#{deploy_user}/.ssh/id_rsa"
 
   verify do
-    has_file "/home/#{deploy_user}/.ssh/id_rsa.pub"
+    # has_file "/home/#{deploy_user}/.ssh/id_rsa.pub"
     has_file "/home/#{deploy_user}/.ssh/authorized_keys"
   end
 

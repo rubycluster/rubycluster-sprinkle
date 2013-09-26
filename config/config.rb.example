@@ -1,0 +1,37 @@
+CONFIG = {
+
+  :vps => {
+    server: 'hostname or ip address',
+    initial: {
+      port: 22,
+      user: 'root',
+      password: 'initial password',
+    },
+    target: {
+      port: 22,
+      user: 'deployer',
+      password: 'new password',
+      group: 'admin',
+    },
+  },
+
+  :vagrant => {
+    server: 'localhost',
+    initial: {
+      port: 2222,
+      user: 'vagrant',
+      password: 'vagrant',
+    },
+    target: {
+      port: 2222,
+      user: 'deployer',
+      password: 'password',
+      group: 'admin',
+    },
+  },
+
+}
+
+def config(*args)
+  args.reduce(CONFIG[ENV['DEPLOY_TO'].to_sym]) { |a,i| a = a[i.to_sym] }
+end

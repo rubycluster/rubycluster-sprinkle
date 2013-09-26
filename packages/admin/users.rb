@@ -35,7 +35,7 @@ package :change_user_login_shell_to_bash do
   deploy_password = Sprinkle::Settings.fetch(:target_password)
   zsh_path = '/bin/bash'
 
-  cmd = "chsh -s #{zsh_path} #{deploy_user}"
+  cmd = "sudo chsh -s #{zsh_path} #{deploy_user}"
   cmd = push_password_to_cmd(deploy_password, cmd)
 
   runner cmd

@@ -13,7 +13,9 @@ def relative_require_from(from_file, required_files_names)
   required_files = required_files_names.map do |name|
     File.realdirpath( File.join(this_dir, name) )
   end
-  required_files.each { |lib| require lib }
+  required_files.each do |lib|
+    require(lib)
+  end
 
 end
 
@@ -22,7 +24,9 @@ def relative_require_all_from(from_file)
   this_dir = File.dirname(this_file)
   files_mask = File.join(this_dir, '*', '*.rb')
   required_files = Dir[files_mask]
-  required_files.each { |lib| require_relative lib }
+  required_files.each do |lib|
+    require_relative(lib)
+  end
 end
 
 def require_all(from_file)
@@ -49,7 +53,9 @@ def relative_eval_from(from_file, required_files_names)
   required_files = required_files_names.map do |name|
     File.realdirpath( File.join(this_dir, name) )
   end
-  required_files.each { |lib| instance_eval(File.read(lib)) }
+  required_files.each do |lib|
+    instance_eval(File.read(lib))
+  end
 
 end
 
@@ -108,7 +114,10 @@ end
 
 def requires_each(packages = [])
 
-  packages.reject{ |i| i.include?('#') }.map(&:to_sym).each do |package|
+  packages
+    .reject{ |i| i.include?('#') }
+    .map(&:to_sym)
+  .each do |package|
     requires package
   end
 

@@ -2,7 +2,7 @@ package :imagemagick do
 
   description "Image Magick"
 
-  apt 'imagemagick librmagick-ruby'
+  apt 'imagemagick libmagickwand-dev'
 
   verify do
     has_executable "convert"

@@ -2,7 +2,8 @@ package :rvm do
 
   deploy_user = Sprinkle::Settings.fetch(:target_user)
 
-  runner '\curl -L https://get.rvm.io | sudo bash -s stable'
+  runner 'gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3'
+  runner '\curl -sSL https://get.rvm.io | sudo bash -s stable'
   # runner 'source /etc/profile.d/rvm.sh'
   runner "adduser #{deploy_user} rvm"
   # push_text '[[ -s ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm', '~/.bashrc'

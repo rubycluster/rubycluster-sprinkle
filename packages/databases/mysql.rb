@@ -16,16 +16,14 @@ package :mysql_dependencies do
 
   apt %w(
     mysql-common
+    ruby-mysql
     libmysqlclient15-dev
-    libmysql-ruby
-    libmysql-ruby1.8
     libdbd-mysql-perl
     libdbi-perl
     libhtml-template-perl
     libnet-daemon-perl
     libplrpc-perl
     libreadline5
-    libruby1.8
     libc6
     libpcre3
     libpcre3-dev
